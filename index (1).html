@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Found — July 2026 MTD Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12161c;
+    --surface:#1b2129;
+    --surface-2:#232a33;
+    --line: rgba(233,236,239,0.09);
+    --text:#e9ecef;
+    --text-dim:#98a2af;
+    --amber:#e3a94b;
+    --amber-dim: rgba(227,169,75,0.15);
+    --good:#4fb286;
+    --warn:#e2604f;
+    --warn-dim: rgba(226,96,79,0.15);
+    --good-dim: rgba(79,178,134,0.15);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--ink);color:var(--text);font-family:'Inter',sans-serif;}
+  body{padding:0 0 80px;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+  /* header */
+  header{padding:48px 0 32px;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin:0 0 14px;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:44px;line-height:1.05;margin:0 0 14px;letter-spacing:-0.01em;}
+  .sub{color:var(--text-dim);font-size:15px;line-height:1.6;max-width:640px;margin:0 0 24px;}
+  .periodbar{display:flex;gap:8px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .pill{padding:6px 12px;border-radius:20px;border:1px solid var(--line);color:var(--text-dim);}
+  .pill.active{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+  .asof{color:var(--text-dim);font-size:12px;margin-top:14px;}
+  .asof b{color:var(--text);}
+
+  section{padding:44px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sectitle{display:flex;align-items:baseline;gap:12px;margin:0 0 22px;}
+  .sectitle .num{font-family:'JetBrains Mono',monospace;color:var(--amber);font-size:13px;}
+  .sectitle h2{font-family:'Fraunces',serif;font-weight:500;font-size:24px;margin:0;}
+
+  /* KPI cards */
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;}
+  .kpi .label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+  .kpi .value{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;margin-bottom:6px;}
+  .kpi .target{font-size:12px;color:var(--text-dim);margin-bottom:14px;}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;}
+  .status.warn{background:var(--warn-dim);color:var(--warn);}
+  .status.good{background:var(--good-dim);color:var(--good);}
+  .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  /* pace tracker - signature element */
+  .pace-intro{font-size:13px;color:var(--text-dim);margin-bottom:20px;line-height:1.6;max-width:680px;}
+  .pace-intro b{color:var(--text);}
+  .pacegrid{display:flex;flex-direction:column;gap:18px;}
+  .pacerow{display:grid;grid-template-columns:140px 1fr 140px;gap:20px;align-items:center;}
+  .pacerow .name{font-size:14px;font-weight:600;}
+  .pacerow .figures{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);text-align:right;}
+  .track{position:relative;height:26px;background:var(--surface-2);border-radius:6px;overflow:hidden;}
+  .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--amber),#c98a35);border-radius:6px;}
+  .marker{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--text);opacity:0.55;}
+  .marker::after{content:attr(data-label);position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);white-space:nowrap;}
+
+  /* funnel */
+  .funnel{display:flex;gap:10px;align-items:stretch;}
+  .fstep{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 14px;text-align:center;}
+  .fstep .n{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;}
+  .fstep .l{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em;margin-top:6px;}
+  .fstep .r{font-size:11px;color:var(--amber);margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .arrow{align-self:center;color:var(--text-dim);font-size:18px;}
+
+  /* content grid */
+  .contentgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .ccard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;}
+  .ccard .label{font-size:12px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;}
+  .ccard .value{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;margin-bottom:4px;}
+  .ccard .vs{font-size:12px;color:var(--text-dim);}
+
+  .notes{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 22px;font-size:13px;line-height:1.7;color:var(--text-dim);}
+  .notes b{color:var(--text);}
+  .notes ul{margin:8px 0 0;padding-left:18px;}
+
+  footer{padding:32px 0 0;font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--amber);text-decoration:none;}
+
+  @media (max-width:720px){
+    .kpis{grid-template-columns:1fr;}
+    .contentgrid{grid-template-columns:1fr;}
+    .pacerow{grid-template-columns:1fr;gap:6px;}
+    .pacerow .figures{text-align:left;}
+    h1{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Creator Partnership Program · Zero-to-one</p>
+    <h1>Found — July 2026, month to date</h1>
+    <p class="sub">Pipeline, paid KPIs, and pace against goal for July — tracked against June's final numbers. Source: Airtable, Refunnel &amp; Instantly (pipeline) and Motion (paid).</p>
+    <div class="periodbar">
+      <span class="pill">Jun final</span>
+      <span class="pill active">Jul MTD</span>
+    </div>
+    <p class="asof">Data as of <b id="asof-date">July 14, 2026</b> · <span id="pace-pct">45%</span> of the month elapsed</p>
+  </header>
+
+  <section>
+    <div class="sectitle"><span class="num">01</span><h2>The three KPIs that matter</h2></div>
+    <div class="kpis" id="kpi-cards"></div>
+  </section>
+
+  <section>
+    <div class="sectitle"><span class="num">02</span><h2>Pace vs. goal</h2></div>
+    <p class="pace-intro">With <b id="pace-pct-2">45%</b> of July gone, this is where cumulative progress sits against each monthly goal. The marker on each bar shows where you'd expect to be if performance were perfectly flat across the month — left of it is behind pace, right of it is ahead.</p>
+    <div class="pacegrid" id="pace-rows"></div>
+  </section>
+
+  <section>
+    <div class="sectitle"><span class="num">03</span><h2>Recruitment funnel — July MTD</h2></div>
+    <div class="funnel" id="funnel-steps"></div>
+  </section>
+
+  <section>
+    <div class="sectitle"><span class="num">04</span><h2>Content &amp; reach</h2></div>
+    <div class="contentgrid" id="content-cards"></div>
+  </section>
+
+  <section>
+    <div class="sectitle"><span class="num">05</span><h2>Notes on the data</h2></div>
+    <div class="notes">
+      <b>Early-month read.</b> July figures are partial — roughly half the reply/applied/onboarded volume of June is expected at this point in the month, so raw counts will look smaller. Rates (reply rate, application rate) are more useful for a mid-month read than raw totals.<br><br>
+      <ul>
+        <li>CAC and ZT1 % of Meta spend are running above target early in July — worth watching whether Lantern creative pacing catches up as spend scales through the month, the way it did in June.</li>
+        <li>Impressions and engagement rate carry the same Partnership-Ad inflation caveat as June: Refunnel's organic engagement rate looks compressed when content is also running as paid.</li>
+        <li>Onboarding is pacing behind the 20-goal; posting volume is roughly on pace.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>Prepared by Zero-to-one · Pipeline: Instantly, Airtable, Refunnel · Paid: Motion</span>
+    <span>Data: <a href="https://docs.google.com/spreadsheets/d/1uuuTes9uJEbLaiAirFzB56jlNu-Kv2O9KERf6QrPLaA/edit" target="_blank">Google Sheet</a></span>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+   UPDATE THIS BLOCK EACH TIME YOU REFRESH THE REPORT.
+   Every number on the page is driven from here — pull the
+   latest values from the "Jul MTD" column (col J) in the sheet,
+   paste them in, save, redeploy. Nothing else needs to change.
+   ============================================================ */
+const DATA = {
+  asOfDate: "July 14, 2026",
+  daysElapsedInMonth: 14,
+  daysInMonth: 31,
+
+  june: {
+    replies: 486, interested: 167, replyRate: 6.53, applied: 56, appRate: 33.53,
+    onboarded: 18, onboardedGoal: 20, posting: 38, posts: 71, postsGoal: 60,
+    impressions: 1300000, engagement: 7000, engagementRate: 0.54, emv: 15300,
+    cac: 540.68, ztShare: 13.17
+  },
+  julyMTD: {
+    replies: 108, interested: 23, replyRate: 21.40, applied: 9, appRate: 39.13,
+    onboarded: 8, onboardedGoal: 20, posting: 11, posts: 30, postsGoal: 60,
+    impressions: 130100, engagement: 5400, engagementRate: 4.15, emv: 883,
+    cac: 705.14, ztShare: 22.66
+  },
+  targets: { cac: 400, ztShareLow: 10, ztShareHigh: 15, engagementRate: 2 }
+};
+
+function fmt(n){ return n.toLocaleString('en-US'); }
+function fmtMoney(n){ return '$' + n.toLocaleString('en-US', {maximumFractionDigits:2}); }
+function pct(n){ return n.toFixed(2) + '%'; }
+
+const pacePct = Math.round((DATA.daysElapsedInMonth / DATA.daysInMonth) * 100);
+document.getElementById('asof-date').textContent = DATA.asOfDate;
+document.getElementById('pace-pct').textContent = pacePct + '%';
+document.getElementById('pace-pct-2').textContent = pacePct + '%';
+
+const j = DATA.julyMTD, t = DATA.targets;
+
+// KPI cards
+const kpis = [
+  {
+    label: 'Cost per Event D (CAC)', value: fmtMoney(j.cac), target: `Target < ${fmtMoney(t.cac)}`,
+    status: j.cac <= t.cac ? 'good' : 'warn',
+    statusText: j.cac <= t.cac ? 'On target' : `${fmtMoney(j.cac - t.cac)} over target`
+  },
+  {
+    label: 'ZT1 % of total Meta spend', value: pct(j.ztShare), target: `Target ${t.ztShareLow}–${t.ztShareHigh}%`,
+    status: (j.ztShare >= t.ztShareLow && j.ztShare <= t.ztShareHigh) ? 'good' : 'warn',
+    statusText: j.ztShare > t.ztShareHigh ? 'Above band' : (j.ztShare < t.ztShareLow ? 'Below band' : 'In band')
+  },
+  {
+    label: 'Organic engagement rate', value: pct(j.engagementRate), target: `Target ${t.engagementRate}%`,
+    status: j.engagementRate >= t.engagementRate ? 'good' : 'warn',
+    statusText: j.engagementRate >= t.engagementRate ? 'Above target' : 'Below target'
+  }
+];
+document.getElementById('kpi-cards').innerHTML = kpis.map(k => `
+  <div class="kpi">
+    <div class="label">${k.label}</div>
+    <div class="value">${k.value}</div>
+    <div class="target">${k.target}</div>
+    <span class="status ${k.status}"><span class="dot"></span>${k.statusText}</span>
+  </div>
+`).join('');
+
+// Pace rows
+function paceRow(name, current, goal){
+  const goalPct = Math.min(100, (current / goal) * 100);
+  return `
+    <div class="pacerow">
+      <div class="name">${name}</div>
+      <div class="track">
+        <div class="fill" style="width:${goalPct}%"></div>
+        <div class="marker" style="left:${pacePct}%" data-label="${pacePct}% of month"></div>
+      </div>
+      <div class="figures">${fmt(current)} / ${fmt(goal)} · ${goalPct.toFixed(0)}%</div>
+    </div>
+  `;
+}
+document.getElementById('pace-rows').innerHTML =
+  paceRow('Posts', j.posts, j.postsGoal) +
+  paceRow('Onboarded', j.onboarded, j.onboardedGoal);
+
+// Funnel
+const funnelSteps = [
+  {n: j.replies, l: 'Replies'},
+  {n: j.interested, l: 'Interested', r: pct(j.replyRate) + ' reply rate'},
+  {n: j.applied, l: 'Applied', r: pct(j.appRate) + ' app rate'},
+  {n: j.onboarded, l: 'Onboarded'},
+  {n: j.posting, l: 'Posting'}
+];
+document.getElementById('funnel-steps').innerHTML = funnelSteps.map((s,i) => `
+  ${i>0 ? '<span class="arrow">→</span>' : ''}
+  <div class="fstep">
+    <div class="n">${fmt(s.n)}</div>
+    <div class="l">${s.l}</div>
+    ${s.r ? `<div class="r">${s.r}</div>` : ''}
+  </div>
+`).join('');
+
+// Content cards
+const contentCards = [
+  {label:'Posts', value: fmt(j.posts), vs: `vs ${fmt(DATA.june.posts)} in June (final)`},
+  {label:'Impressions', value: fmt(j.impressions), vs: `vs ${fmt(DATA.june.impressions)} in June (final)`},
+  {label:'EMV', value: fmtMoney(j.emv), vs: `vs ${fmtMoney(DATA.june.emv)} in June (final)`},
+  {label:'Total creators posting', value: fmt(j.posting), vs: `vs ${fmt(DATA.june.posting)} in June (final)`}
+];
+document.getElementById('content-cards').innerHTML = contentCards.map(c => `
+  <div class="ccard">
+    <div class="label">${c.label}</div>
+    <div class="value">${c.value}</div>
+    <div class="vs">${c.vs}</div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
