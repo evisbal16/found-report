@@ -133,35 +133,35 @@
     <h1>Found — July 2026, month to date</h1>
     <p class="sub">Pipeline, paid KPIs, and pace against goal for July — tracked against June's final numbers. Source: Airtable, Refunnel &amp; Instantly (pipeline) and Motion (paid).</p>
     <div class="periodbar">
-      <span class="pill">Jun final</span>
-      <span class="pill active">Jul MTD</span>
+      <span class="pill" id="pill-june" onclick="setPeriod('june')" style="cursor:pointer;">Jun final</span>
+      <span class="pill active" id="pill-july" onclick="setPeriod('july')" style="cursor:pointer;">Jul MTD</span>
     </div>
-    <p class="asof">Data as of <b id="asof-date">July 15, 2026</b> · <span id="pace-pct">48%</span> of the month elapsed</p>
+    <p class="asof" id="asof-line">Data as of <b id="asof-date">July 15, 2026</b> · <span id="pace-phrase"><span id="pace-pct">48%</span> of the month elapsed</span></p>
   </header>
 
-  <section>
-    <div class="sectitle"><span class="num">01</span><h2>The three KPIs that matter</h2></div>
+  <section id="section-kpis">
+    <div class="sectitle"><span class="num" id="num-kpis">01</span><h2>The three KPIs that matter</h2></div>
     <div class="kpis" id="kpi-cards"></div>
   </section>
 
-  <section>
-    <div class="sectitle"><span class="num">02</span><h2>Pace vs. goal</h2></div>
+  <section id="section-pace">
+    <div class="sectitle"><span class="num" id="num-pace">02</span><h2>Pace vs. goal</h2></div>
     <p class="pace-intro">With <b id="pace-pct-2">48%</b> of July gone, this is where cumulative progress sits against each monthly goal. The gold marker shows where you'd expect to be if performance were perfectly flat across the month.</p>
     <div class="pacegrid" id="pace-rows"></div>
   </section>
 
-  <section>
-    <div class="sectitle"><span class="num">03</span><h2>Recruitment funnel — July MTD</h2></div>
+  <section id="section-funnel">
+    <div class="sectitle"><span class="num" id="num-funnel">03</span><h2 id="funnel-title">Recruitment funnel — July MTD</h2></div>
     <div class="funnel" id="funnel-steps"></div>
   </section>
 
-  <section>
-    <div class="sectitle"><span class="num">04</span><h2>Content &amp; reach</h2></div>
+  <section id="section-content">
+    <div class="sectitle"><span class="num" id="num-content">04</span><h2>Content &amp; reach</h2></div>
     <div class="contentgrid" id="content-cards"></div>
   </section>
 
-  <section>
-    <div class="sectitle"><span class="num">05</span><h2>Creator pipeline &amp; deliverables</h2></div>
+  <section id="section-pipeline">
+    <div class="sectitle"><span class="num" id="num-pipeline">05</span><h2>Creator pipeline &amp; deliverables</h2></div>
     <span class="pipe-status" style="background:var(--good-dim);color:var(--ink);">✅ Updated by Jez · Jul 15</span>
     <div class="pipegrid">
       <div class="pipecard" style="border-style:solid;">
@@ -198,17 +198,11 @@
     </div>
   </section>
 
-  <section>
-    <div class="sectitle"><span class="num">06</span><h2>Notes on the data</h2></div>
+  <section id="section-notes">
+    <div class="sectitle"><span class="num" id="num-notes">06</span><h2>Notes on the data</h2></div>
     <div class="notes">
-      <b>Early-month read.</b> July figures are partial. Rates (reply rate, application rate) are more useful for a mid-month read than raw totals, which will naturally look smaller than June's final numbers.<br><br>
-      <ul>
-        <li>CAC and ZT1 % of Meta spend are running above target early in July — worth watching whether Lantern creative pacing catches up as spend scales through the month, the way it did in June.</li>
-        <li>Impressions and engagement rate carry the same Partnership-Ad inflation caveat as June: Refunnel's organic engagement rate looks compressed when content is also running as paid.</li>
-        <li>Onboarding is pacing behind the 20-goal on paper, but 12 approved creators are sitting just behind that line waiting on video submission — actual pipeline health is stronger than the raw number suggests.</li>
-        <li>Section 05 (creator pipeline &amp; deliverables) reflects Jez's affiliate-program update as of July 15.</li>
-        <li>Note the affiliate model has no contracts, but deliverables are still tracked as owed/outstanding per Mel's format (2 Reels/creator/month) — the underlying agreement is informal, the reporting language matches contracted programs.</li>
-      </ul>
+      <b id="notes-heading">Early-month read.</b> <span id="notes-intro">July figures are partial. Rates (reply rate, application rate) are more useful for a mid-month read than raw totals, which will naturally look smaller than June's final numbers.</span><br><br>
+      <ul id="notes-list"></ul>
     </div>
   </section>
 
@@ -226,7 +220,7 @@
    the sheet, paste them in, save, redeploy.
    ============================================================ */
 const DATA = {
-  asOfDate: "July 15, 2026",
+  julyAsOfDate: "July 15, 2026",
   daysElapsedInMonth: 15,
   daysInMonth: 31,
 
@@ -245,42 +239,56 @@ const DATA = {
   targets: { cac: 400, ztShareLow: 10, ztShareHigh: 15, engagementRate: 2 }
 };
 
+const julyNotes = [
+  "CAC and ZT1 % of Meta spend are running above target early in July — worth watching whether Lantern creative pacing catches up as spend scales through the month, the way it did in June.",
+  "Impressions and engagement rate carry the same Partnership-Ad inflation caveat as June: Refunnel's organic engagement rate looks compressed when content is also running as paid.",
+  "Onboarding is pacing behind the 20-goal on paper, but 12 approved creators are sitting just behind that line waiting on video submission — actual pipeline health is stronger than the raw number suggests.",
+  "Section 05 (creator pipeline &amp; deliverables) reflects Jez's affiliate-program update as of July 15.",
+  "Note the affiliate model has no contracts, but deliverables are still tracked as owed/outstanding per Mel's format (2 Reels/creator/month) — the underlying agreement is informal, the reporting language matches contracted programs."
+];
+
+const juneNotes = [
+  "June closed inside the ZT1 % of Meta spend target band for the first month (13.17%), after Lantern creative scaled ZT1 spend from ~$11K to ~$50K over the month.",
+  "CAC improved month-over-month ($769 → $540.68) as spend scaled, though it finished the month still above the $400 target.",
+  "Content hit a record 71 posts (118% of the 60-goal) from 38 posting creators, the program's highest-output month to date.",
+  "Onboarding landed at 90% of goal (18 of 20).",
+  "Impressions and EMV reached program highs, but June impressions carry the same Partnership-Ad inflation caveat noted elsewhere in this report."
+];
+
 function fmt(n){ return n.toLocaleString('en-US'); }
 function fmtMoney(n){ return '$' + n.toLocaleString('en-US', {maximumFractionDigits:2}); }
 function pct(n){ return n.toFixed(2) + '%'; }
 
 const pacePct = Math.round((DATA.daysElapsedInMonth / DATA.daysInMonth) * 100);
-document.getElementById('asof-date').textContent = DATA.asOfDate;
-document.getElementById('pace-pct').textContent = pacePct + '%';
-document.getElementById('pace-pct-2').textContent = pacePct + '%';
+const t = DATA.targets;
 
-const j = DATA.julyMTD, t = DATA.targets;
-
-const kpis = [
-  {
-    label: 'Cost per Event D (CAC)', value: fmtMoney(j.cac), target: `Target < ${fmtMoney(t.cac)}`,
-    status: j.cac <= t.cac ? 'good' : 'warn',
-    statusText: j.cac <= t.cac ? 'On target' : `${fmtMoney(j.cac - t.cac)} over target`
-  },
-  {
-    label: 'ZT1 % of total Meta spend', value: pct(j.ztShare), target: `Target ${t.ztShareLow}–${t.ztShareHigh}%`,
-    status: (j.ztShare >= t.ztShareLow && j.ztShare <= t.ztShareHigh) ? 'good' : 'warn',
-    statusText: j.ztShare > t.ztShareHigh ? 'Above band' : (j.ztShare < t.ztShareLow ? 'Below band' : 'In band')
-  },
-  {
-    label: 'Organic engagement rate', value: pct(j.engagementRate), target: `Target ${t.engagementRate}%`,
-    status: j.engagementRate >= t.engagementRate ? 'good' : 'warn',
-    statusText: j.engagementRate >= t.engagementRate ? 'Above target' : 'Below target'
-  }
-];
-document.getElementById('kpi-cards').innerHTML = kpis.map(k => `
-  <div class="kpi">
-    <div class="label">${k.label}</div>
-    <div class="value">${k.value}</div>
-    <div class="target">${k.target}</div>
-    <span class="status ${k.status}"><span class="dot"></span>${k.statusText}</span>
-  </div>
-`).join('');
+function renderKPIs(d){
+  const kpis = [
+    {
+      label: 'Cost per Event D (CAC)', value: fmtMoney(d.cac), target: `Target < ${fmtMoney(t.cac)}`,
+      status: d.cac <= t.cac ? 'good' : 'warn',
+      statusText: d.cac <= t.cac ? 'On target' : `${fmtMoney(d.cac - t.cac)} over target`
+    },
+    {
+      label: 'ZT1 % of total Meta spend', value: pct(d.ztShare), target: `Target ${t.ztShareLow}–${t.ztShareHigh}%`,
+      status: (d.ztShare >= t.ztShareLow && d.ztShare <= t.ztShareHigh) ? 'good' : 'warn',
+      statusText: d.ztShare > t.ztShareHigh ? 'Above band' : (d.ztShare < t.ztShareLow ? 'Below band' : 'In band')
+    },
+    {
+      label: 'Organic engagement rate', value: pct(d.engagementRate), target: `Target ${t.engagementRate}%`,
+      status: d.engagementRate >= t.engagementRate ? 'good' : 'warn',
+      statusText: d.engagementRate >= t.engagementRate ? 'Above target' : 'Below target'
+    }
+  ];
+  document.getElementById('kpi-cards').innerHTML = kpis.map(k => `
+    <div class="kpi">
+      <div class="label">${k.label}</div>
+      <div class="value">${k.value}</div>
+      <div class="target">${k.target}</div>
+      <span class="status ${k.status}"><span class="dot"></span>${k.statusText}</span>
+    </div>
+  `).join('');
+}
 
 function paceRow(name, current, goal){
   const goalPct = Math.min(100, (current / goal) * 100);
@@ -295,39 +303,97 @@ function paceRow(name, current, goal){
     </div>
   `;
 }
-document.getElementById('pace-rows').innerHTML =
-  paceRow('Posts', j.posts, j.postsGoal) +
-  paceRow('Onboarded', j.onboarded, j.onboardedGoal);
+function renderPace(d){
+  document.getElementById('pace-rows').innerHTML =
+    paceRow('Posts', d.posts, d.postsGoal) +
+    paceRow('Onboarded', d.onboarded, d.onboardedGoal);
+}
 
-const funnelSteps = [
-  {n: j.replies, l: 'Replies'},
-  {n: j.interested, l: 'Interested', r: pct(j.replyRate) + ' reply rate'},
-  {n: j.applied, l: 'Applied', r: pct(j.appRate) + ' app rate'},
-  {n: j.onboarded, l: 'Onboarded'},
-  {n: j.posting, l: 'Posting'}
-];
-document.getElementById('funnel-steps').innerHTML = funnelSteps.map((s,i) => `
-  ${i>0 ? '<span class="arrow">→</span>' : ''}
-  <div class="fstep">
-    <div class="n">${fmt(s.n)}</div>
-    <div class="l">${s.l}</div>
-    ${s.r ? `<div class="r">${s.r}</div>` : ''}
-  </div>
-`).join('');
+function renderFunnel(d){
+  const funnelSteps = [
+    {n: d.replies, l: 'Replies'},
+    {n: d.interested, l: 'Interested', r: pct(d.replyRate) + ' reply rate'},
+    {n: d.applied, l: 'Applied', r: pct(d.appRate) + ' app rate'},
+    {n: d.onboarded, l: 'Onboarded'},
+    {n: d.posting, l: 'Posting'}
+  ];
+  document.getElementById('funnel-steps').innerHTML = funnelSteps.map((s,i) => `
+    ${i>0 ? '<span class="arrow">→</span>' : ''}
+    <div class="fstep">
+      <div class="n">${fmt(s.n)}</div>
+      <div class="l">${s.l}</div>
+      ${s.r ? `<div class="r">${s.r}</div>` : ''}
+    </div>
+  `).join('');
+}
 
-const contentCards = [
-  {label:'Posts', value: fmt(j.posts), vs: `vs ${fmt(DATA.june.posts)} in June (final)`},
-  {label:'Impressions', value: fmt(j.impressions), vs: `vs ${fmt(DATA.june.impressions)} in June (final)`},
-  {label:'EMV', value: fmtMoney(j.emv), vs: `vs ${fmtMoney(DATA.june.emv)} in June (final)`},
-  {label:'Total creators posting', value: fmt(j.posting), vs: `vs ${fmt(DATA.june.posting)} in June (final)`}
-];
-document.getElementById('content-cards').innerHTML = contentCards.map(c => `
-  <div class="ccard">
-    <div class="label">${c.label}</div>
-    <div class="value">${c.value}</div>
-    <div class="vs">${c.vs}</div>
-  </div>
-`).join('');
+function renderContent(d, compareD, compareLabel){
+  const contentCards = [
+    {label:'Posts', value: fmt(d.posts), vs: `vs ${fmt(compareD.posts)} in ${compareLabel}`},
+    {label:'Impressions', value: fmt(d.impressions), vs: `vs ${fmt(compareD.impressions)} in ${compareLabel}`},
+    {label:'EMV', value: fmtMoney(d.emv), vs: `vs ${fmtMoney(compareD.emv)} in ${compareLabel}`},
+    {label:'Total creators posting', value: fmt(d.posting), vs: `vs ${fmt(compareD.posting)} in ${compareLabel}`}
+  ];
+  document.getElementById('content-cards').innerHTML = contentCards.map(c => `
+    <div class="ccard">
+      <div class="label">${c.label}</div>
+      <div class="value">${c.value}</div>
+      <div class="vs">${c.vs}</div>
+    </div>
+  `).join('');
+}
+
+function renumberSections(){
+  const order = ['num-kpis','num-pace','num-funnel','num-content','num-pipeline','num-notes'];
+  let n = 1;
+  order.forEach(id => {
+    const el = document.getElementById(id);
+    const section = el.closest('section');
+    if (section && section.style.display !== 'none'){
+      el.textContent = String(n).padStart(2,'0');
+      n++;
+    }
+  });
+}
+
+function setPeriod(period){
+  document.getElementById('pill-july').classList.toggle('active', period === 'july');
+  document.getElementById('pill-june').classList.toggle('active', period === 'june');
+
+  const sectionPace = document.getElementById('section-pace');
+  const sectionPipeline = document.getElementById('section-pipeline');
+
+  if (period === 'july'){
+    document.getElementById('asof-date').textContent = DATA.julyAsOfDate;
+    document.getElementById('pace-phrase').innerHTML = `<span id="pace-pct">${pacePct}%</span> of the month elapsed`;
+    document.getElementById('pace-pct-2').textContent = pacePct + '%';
+    document.getElementById('funnel-title').textContent = 'Recruitment funnel — July MTD';
+    sectionPace.style.display = '';
+    sectionPipeline.style.display = '';
+    renderKPIs(DATA.julyMTD);
+    renderPace(DATA.julyMTD);
+    renderFunnel(DATA.julyMTD);
+    renderContent(DATA.julyMTD, DATA.june, 'June (final)');
+    document.getElementById('notes-heading').textContent = 'Early-month read.';
+    document.getElementById('notes-intro').textContent = "July figures are partial. Rates (reply rate, application rate) are more useful for a mid-month read than raw totals, which will naturally look smaller than June's final numbers.";
+    document.getElementById('notes-list').innerHTML = julyNotes.map(n => `<li>${n}</li>`).join('');
+  } else {
+    document.getElementById('asof-date').textContent = 'June 30, 2026 (final)';
+    document.getElementById('pace-phrase').innerHTML = 'month closed';
+    sectionPace.style.display = 'none';
+    sectionPipeline.style.display = 'none';
+    renderKPIs(DATA.june);
+    renderFunnel(DATA.june);
+    renderContent(DATA.june, DATA.julyMTD, 'Jul MTD');
+    document.getElementById('funnel-title').textContent = 'Recruitment funnel — June final';
+    document.getElementById('notes-heading').textContent = 'June closed, final.';
+    document.getElementById('notes-intro').textContent = 'These are June\'s final numbers — nothing here is subject to further change.';
+    document.getElementById('notes-list').innerHTML = juneNotes.map(n => `<li>${n}</li>`).join('');
+  }
+  renumberSections();
+}
+
+setPeriod('july');
 </script>
 </body>
 </html>
