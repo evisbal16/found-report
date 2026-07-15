@@ -5,102 +5,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Found — July 2026 MTD Report</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#12161c;
-    --surface:#1b2129;
-    --surface-2:#232a33;
-    --line: rgba(233,236,239,0.09);
-    --text:#e9ecef;
-    --text-dim:#98a2af;
-    --amber:#e3a94b;
-    --amber-dim: rgba(227,169,75,0.15);
-    --good:#4fb286;
-    --warn:#e2604f;
-    --warn-dim: rgba(226,96,79,0.15);
-    --good-dim: rgba(79,178,134,0.15);
+    --bg:#F4F8F6;
+    --surface:#FFFFFF;
+    --surface-2:#E4F0EA;
+    --line: rgba(28,63,40,0.12);
+    --ink:#1C3F28;
+    --text:#20321F;
+    --text-dim:#5C7166;
+    --green:#1C3F28;
+    --green-soft: rgba(28,63,40,0.08);
+    --green-line: rgba(28,63,40,0.25);
+    --mint:#BDE1D4;
+    --gold:#8A6A2F;
+    --gold-soft: rgba(189,225,212,0.55);
+    --good:#1C3F28;
+    --good-dim: rgba(189,225,212,0.65);
+    --warn:#A24B2E;
+    --warn-dim: rgba(162,75,46,0.10);
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--ink);color:var(--text);font-family:'Inter',sans-serif;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;}
   body{padding:0 0 80px;}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
 
-  /* header */
-  header{padding:48px 0 32px;border-bottom:1px solid var(--line);}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin:0 0 14px;}
-  h1{font-family:'Fraunces',serif;font-weight:600;font-size:44px;line-height:1.05;margin:0 0 14px;letter-spacing:-0.01em;}
+  .logo{display:block;height:34px;width:auto;margin-bottom:22px;}
+
+  header{padding:44px 0 30px;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin:0 0 14px;font-weight:700;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:42px;line-height:1.08;margin:0 0 14px;letter-spacing:-0.01em;color:var(--ink);}
   .sub{color:var(--text-dim);font-size:15px;line-height:1.6;max-width:640px;margin:0 0 24px;}
   .periodbar{display:flex;gap:8px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;}
   .pill{padding:6px 12px;border-radius:20px;border:1px solid var(--line);color:var(--text-dim);}
-  .pill.active{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+  .pill.active{background:var(--green);border-color:var(--green);color:#fff;}
   .asof{color:var(--text-dim);font-size:12px;margin-top:14px;}
-  .asof b{color:var(--text);}
+  .asof b{color:var(--ink);}
 
-  section{padding:44px 0;border-bottom:1px solid var(--line);}
+  section{padding:42px 0;border-bottom:1px solid var(--line);}
   section:last-of-type{border-bottom:none;}
   .sectitle{display:flex;align-items:baseline;gap:12px;margin:0 0 22px;}
-  .sectitle .num{font-family:'JetBrains Mono',monospace;color:var(--amber);font-size:13px;}
-  .sectitle h2{font-family:'Fraunces',serif;font-weight:500;font-size:24px;margin:0;}
+  .sectitle .num{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:13px;font-weight:700;}
+  .sectitle h2{font-family:'Fraunces',serif;font-weight:600;font-size:23px;margin:0;color:var(--ink);}
 
-  /* KPI cards */
   .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;}
   .kpi .label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
-  .kpi .value{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;margin-bottom:6px;}
+  .kpi .value{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;margin-bottom:6px;color:var(--ink);}
   .kpi .target{font-size:12px;color:var(--text-dim);margin-bottom:14px;}
-  .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;}
   .status.warn{background:var(--warn-dim);color:var(--warn);}
   .status.good{background:var(--good-dim);color:var(--good);}
   .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
 
-  /* pace tracker - signature element */
   .pace-intro{font-size:13px;color:var(--text-dim);margin-bottom:20px;line-height:1.6;max-width:680px;}
-  .pace-intro b{color:var(--text);}
+  .pace-intro b{color:var(--ink);}
   .pacegrid{display:flex;flex-direction:column;gap:18px;}
   .pacerow{display:grid;grid-template-columns:140px 1fr 140px;gap:20px;align-items:center;}
-  .pacerow .name{font-size:14px;font-weight:600;}
+  .pacerow .name{font-size:14px;font-weight:700;color:var(--ink);}
   .pacerow .figures{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);text-align:right;}
   .track{position:relative;height:26px;background:var(--surface-2);border-radius:6px;overflow:hidden;}
-  .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--amber),#c98a35);border-radius:6px;}
-  .marker{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--text);opacity:0.55;}
+  .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--green),#1C5A44);border-radius:6px;}
+  .marker{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--gold);opacity:0.9;}
   .marker::after{content:attr(data-label);position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);white-space:nowrap;}
 
-  /* funnel */
   .funnel{display:flex;gap:10px;align-items:stretch;}
-  .fstep{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 14px;text-align:center;}
-  .fstep .n{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;}
+  .fstep{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 14px;text-align:center;}
+  .fstep .n{font-family:'JetBrains Mono',monospace;font-size:25px;font-weight:700;color:var(--ink);}
   .fstep .l{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em;margin-top:6px;}
-  .fstep .r{font-size:11px;color:var(--amber);margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .fstep .r{font-size:11px;color:var(--green);margin-top:4px;font-family:'JetBrains Mono',monospace;font-weight:700;}
   .arrow{align-self:center;color:var(--text-dim);font-size:18px;}
 
-  /* content grid */
   .contentgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  .ccard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;}
+  .ccard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;}
   .ccard .label{font-size:12px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;}
-  .ccard .value{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;margin-bottom:4px;}
+  .ccard .value{font-family:'JetBrains Mono',monospace;font-size:25px;font-weight:700;margin-bottom:4px;color:var(--ink);}
   .ccard .vs{font-size:12px;color:var(--text-dim);}
 
-  .notes{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 22px;font-size:13px;line-height:1.7;color:var(--text-dim);}
-  .notes b{color:var(--text);}
+  /* pipeline placeholder section */
+  .pipe-status{display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);color:#5C3E17;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:18px;}
+  .pipegrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .pipecard{background:var(--surface);border:1px dashed var(--green-line);border-radius:12px;padding:20px;}
+  .pipecard h3{font-family:'Fraunces',serif;font-size:16px;margin:0 0 12px;color:var(--ink);}
+  .pipecard .row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line);color:var(--text-dim);}
+  .pipecard .row:last-child{border-bottom:none;}
+  .pipecard .row b{color:var(--ink);font-family:'JetBrains Mono',monospace;}
+  .tbd{color:var(--gold);font-weight:700;font-family:'JetBrains Mono',monospace;}
+  .totalsrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .totalcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;}
+  .totalcard .tval{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--gold);}
+  .totalcard .tlab{font-size:11px;color:var(--text-dim);text-transform:uppercase;margin-top:4px;}
+  .boostnote{margin-top:16px;font-size:13px;color:var(--text-dim);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .boostnote b{color:var(--ink);}
+
+  .notes{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;font-size:13px;line-height:1.7;color:var(--text-dim);}
+  .notes b{color:var(--ink);}
   .notes ul{margin:8px 0 0;padding-left:18px;}
 
   footer{padding:32px 0 0;font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-  footer a{color:var(--amber);text-decoration:none;}
+  footer a{color:var(--green);text-decoration:none;font-weight:600;}
 
   @media (max-width:720px){
     .kpis{grid-template-columns:1fr;}
     .contentgrid{grid-template-columns:1fr;}
+    .pipegrid{grid-template-columns:1fr;}
+    .totalsrow{grid-template-columns:repeat(2,1fr);}
     .pacerow{grid-template-columns:1fr;gap:6px;}
     .pacerow .figures{text-align:left;}
-    h1{font-size:32px;}
+    h1{font-size:30px;}
   }
 </style>
 </head>
 <body>
+
 <div class="wrap">
 
   <header>
+    <svg class="logo" viewBox="0 0 775 217" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M70.6977 0.0113628C42.8818 0.0113628 20.375 18.2056 20.375 44.1679C20.375 60.9971 31.1988 68.1443 44.9501 72.0322C49.3434 73.2743 49.3434 78.8332 44.9501 80.0754C32.0321 83.7277 20.3212 90.6387 20.3212 104.818L20.3206 189.258C20.3206 200.626 15.5771 204.703 2.68965 206.483C1.1634 206.694 0 207.984 0 209.531V211.443C0 213.114 1.34906 214.458 3.01315 214.458H67.9708C69.6349 214.458 70.984 213.103 70.984 211.432V209.537C70.984 207.983 69.8074 206.688 68.2721 206.49C54.488 204.72 49.7109 200.655 49.7109 189.246C49.7109 173.955 49.7119 126.064 49.7131 100.219C49.7137 87.9703 69.8974 81.5144 77.7776 80.1698C82.7945 79.3138 82.7945 72.0755 77.7775 71.2195C55.1257 67.3545 41.0327 52.3542 41.0326 35.4632C42.9843 15.9244 53.3398 10.3041 64.7704 10.3041C80.943 10.3041 86.6698 27.6945 89.1679 35.2803C89.3182 35.7367 89.4568 36.1577 89.5853 36.5372C90.9154 39.4984 94.2211 43.1001 97.7351 43.1001H104.005C111.308 43.1001 118.928 39.2535 118.928 29.3603C118.928 14.7692 102.931 0.176531 76.5485 0L70.6977 0.0113628Z" fill="#1C3F28"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M754.679 15.6219V190.511C754.679 200.543 759.292 204.846 771.78 202.161C773.407 201.811 775 203.016 775 204.688V207.628C775 208.496 774.559 209.307 773.819 209.754C764.765 215.215 756.598 216.681 749.599 216.681C734.675 216.681 726.102 209.979 726.102 192.107C712.449 209.022 694.986 217 675.935 217C641.325 217 613.066 189.235 613.066 144.874C613.066 95.7264 646.405 68.2803 682.285 68.2803C695.649 68.2803 705.616 71.9301 712.639 74.5018C721.968 77.918 726.102 79.4318 726.102 67.9611V39.2384C726.102 26.0003 722.716 15.8933 708.228 16.6346C706.746 16.7104 705.464 15.5499 705.464 14.0581V11.5502C705.464 10.3545 706.296 9.32185 707.46 9.07401L742.931 6.04775C750.141 6.04775 754.679 7.96252 754.679 15.6219ZM642.595 132.108C642.595 169.129 661.964 198.171 691.493 198.171C706.416 198.171 726.102 190.511 726.102 164.98V124.13C726.102 92.2158 701.018 78.1736 681.015 78.1736C656.566 78.1736 642.595 99.8752 642.595 132.108Z" fill="#1C3F28"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M171.09 217C210.462 217 246.341 189.235 246.341 142.321C246.341 95.7264 210.779 68.2803 171.725 68.2803C132.353 68.2803 96.7906 96.0455 96.7906 142.959C96.7906 189.554 132.035 217 171.09 217ZM178.393 207.426C148.546 207.426 126.955 172.639 126.955 132.108C126.955 95.0881 142.831 77.8544 164.739 77.8544C194.268 77.8544 216.177 112.322 216.177 153.172C216.177 190.192 199.984 207.426 178.393 207.426Z" fill="#1C3F28"/>
+<path d="M369.168 195.618C364.406 201.043 350.117 217 323.128 217C299.315 217 276.771 202.958 276.771 164.023V102.428C276.771 88.8894 276.398 79.1125 261.91 79.8528C260.428 79.9285 259.145 78.7681 259.145 77.2762V74.7683C259.145 73.5726 259.978 72.54 261.142 72.2921L293.638 69.2659C300.8 69.2659 305.347 70.8333 305.347 78.4927V157.001C305.347 181.575 317.413 199.128 339.639 199.128C361.865 199.128 376.471 180.618 376.471 157.001V102.428C376.471 88.8735 376.373 79.0967 361.607 79.8528C360.126 79.9286 358.846 78.7685 358.846 77.2784V74.7657C358.846 73.5699 359.678 72.5373 360.842 72.2895L393.828 69.2632C401.136 69.2632 405.048 70.8333 405.048 78.4927V190.83C405.048 200.535 409.365 204.879 417.773 203.862C419.392 203.666 420.924 204.856 420.924 206.495V209.323C420.924 210.136 420.54 210.906 419.859 211.344C414.178 214.99 406.195 216.681 399.332 216.681C385.679 216.681 378.059 209.021 376.154 197.532C375.836 194.979 375.201 193.064 372.979 193.064C371.634 193.064 370.972 193.752 369.836 194.932L369.631 195.145C369.574 195.204 369.515 195.265 369.455 195.326C369.402 195.381 369.348 195.436 369.293 195.492L369.231 195.554L369.168 195.618Z" fill="#1C3F28"/>
+<path d="M569.582 214.366C578.8 218.069 592.172 217.004 602.821 211.171C603.524 210.786 603.946 210.037 603.946 209.233V205.769C603.946 204.292 602.563 203.22 601.111 203.452C592.6 204.811 587.419 201.425 587.419 187.948V117.68C587.419 78.0338 564.632 64.1738 540.561 64.1738C515.807 64.1738 503.266 77.8908 497.216 84.5079C496.923 84.8289 496.645 85.1333 496.381 85.4185C495.713 86.1412 495.086 86.8354 494.481 87.5041L494.479 87.5063L494.471 87.5159C493.764 88.2982 493.088 89.0457 492.416 89.7627C490.203 91.5604 487.797 89.7626 487.28 85.9615C486.694 81.6626 485.136 78.6178 483.588 76.2967C472.729 60.0143 446.924 69.2231 442.452 71.7997C441.169 72.5389 440.625 73.2805 440.625 74.4882V77.0212C440.625 78.528 441.875 79.91 443.373 79.8335C456.253 79.4055 457.759 84.9887 457.759 98.6629V189.541C457.759 201.152 452.857 205.232 439.498 206.998C438.208 207.169 437.219 208.261 437.219 209.568V212.449C437.219 213.86 438.359 215.005 439.765 215.005H504.638C506.044 215.005 507.184 213.86 507.184 212.449V209.568C507.184 208.261 506.195 207.169 504.905 206.998C491.546 205.232 486.644 201.152 486.644 189.541V127.767C486.644 103.915 501.407 85.2198 523.873 85.2198C546.659 85.2198 558.534 103.27 558.534 127.767V191.358C558.534 201.584 561.673 211.189 569.582 214.366Z" fill="#1C3F28"/>
+</svg>
     <p class="eyebrow">Creator Partnership Program · Zero-to-one</p>
     <h1>Found — July 2026, month to date</h1>
     <p class="sub">Pipeline, paid KPIs, and pace against goal for July — tracked against June's final numbers. Source: Airtable, Refunnel &amp; Instantly (pipeline) and Motion (paid).</p>
@@ -108,7 +136,7 @@
       <span class="pill">Jun final</span>
       <span class="pill active">Jul MTD</span>
     </div>
-    <p class="asof">Data as of <b id="asof-date">July 14, 2026</b> · <span id="pace-pct">45%</span> of the month elapsed</p>
+    <p class="asof">Data as of <b id="asof-date">July 15, 2026</b> · <span id="pace-pct">48%</span> of the month elapsed</p>
   </header>
 
   <section>
@@ -118,7 +146,7 @@
 
   <section>
     <div class="sectitle"><span class="num">02</span><h2>Pace vs. goal</h2></div>
-    <p class="pace-intro">With <b id="pace-pct-2">45%</b> of July gone, this is where cumulative progress sits against each monthly goal. The marker on each bar shows where you'd expect to be if performance were perfectly flat across the month — left of it is behind pace, right of it is ahead.</p>
+    <p class="pace-intro">With <b id="pace-pct-2">48%</b> of July gone, this is where cumulative progress sits against each monthly goal. The gold marker shows where you'd expect to be if performance were perfectly flat across the month.</p>
     <div class="pacegrid" id="pace-rows"></div>
   </section>
 
@@ -133,13 +161,57 @@
   </section>
 
   <section>
-    <div class="sectitle"><span class="num">05</span><h2>Notes on the data</h2></div>
+    <div class="sectitle"><span class="num">05</span><h2>Creator pipeline &amp; deliverables</h2></div>
+    <span class="pipe-status" style="background:var(--good-dim);color:var(--ink);">✅ Updated by Jez · Jul 15</span>
+    <div class="pipegrid">
+      <div class="pipecard" style="border-style:solid;">
+        <h3>Active creators (affiliate program)</h3>
+        <div class="row"><span>Active creators</span><b>35</b></div>
+        <div class="row"><span>Deliverables owed / creator</span><b>2 Reels / mo</b></div>
+        <div class="row"><span>Total deliverables owed this month</span><b>70</b></div>
+        <div class="row"><span>Posted so far this month</span><b>25 posts (16 of 35 creators)</b></div>
+        <div class="row"><span>Deliverables still outstanding</span><b>25–30</b></div>
+      </div>
+      <div class="pipecard" style="border-style:solid;">
+        <h3>New creators onboarded</h3>
+        <div class="row"><span>New creators onboarded (Jul)</span><b>8</b></div>
+        <div class="row"><span>Program structure</span><b>Affiliate, no contracts</b></div>
+        <div class="row"><span>Deliverables owed</span><b>Same 2 Reels/mo, folded into the 35 active</b></div>
+      </div>
+    </div>
+    <div class="totalsrow">
+      <div class="totalcard"><div class="tval">35</div><div class="tlab">Total active creators</div></div>
+      <div class="totalcard"><div class="tval">8</div><div class="tlab">New creators (Jul)</div></div>
+      <div class="totalcard"><div class="tval">25</div><div class="tlab">Posts delivered so far</div></div>
+      <div class="totalcard"><div class="tval">25–30</div><div class="tlab">Deliverables outstanding</div></div>
+    </div>
+    <div class="boostnote">
+      <b>Top new creators this month:</b>
+      <ul style="margin:8px 0 0;padding-left:18px;">
+        <li><a href="https://www.instagram.com/reels/Dag4im-AWKA/" target="_blank" style="color:var(--ink);font-weight:600;">@mayraggxo</a></li>
+        <li><a href="https://www.instagram.com/reels/DaTRwpJogDI/" target="_blank" style="color:var(--ink);font-weight:600;">@tay_noto</a></li>
+        <li><a href="https://www.instagram.com/reels/DawDj44BtYO/" target="_blank" style="color:var(--ink);font-weight:600;">@bethsboholife</a></li>
+        <li><a href="https://www.instagram.com/reels/DaV8vONzVJz/" target="_blank" style="color:var(--ink);font-weight:600;">@brionajenkins</a></li>
+      </ul>
+      <br>
+      <b>Top video by engagement:</b> <a href="https://www.instagram.com/reels/DaiqA5KIrxz/" target="_blank" style="color:var(--ink);font-weight:600;">@youlovesonataaa</a>
+      <br><br>
+      <b>Still open:</b> content shared to Found's media team for boosting (Partnership Ad / Spark Ad candidates) — Jez's update didn't cover this yet, worth a quick follow-up.
+      <br><br>
+      <b>Cross-check against the tracker:</b> Jez's 16-posting-creators and ~25-posts figures line up closely with what Instantly/Refunnel show for July MTD (16 posting, 24 posts) — good internal consistency, small gap likely just a day of lag between pulls.
+    </div>
+  </section>
+
+  <section>
+    <div class="sectitle"><span class="num">06</span><h2>Notes on the data</h2></div>
     <div class="notes">
-      <b>Early-month read.</b> July figures are partial — roughly half the reply/applied/onboarded volume of June is expected at this point in the month, so raw counts will look smaller. Rates (reply rate, application rate) are more useful for a mid-month read than raw totals.<br><br>
+      <b>Early-month read.</b> July figures are partial. Rates (reply rate, application rate) are more useful for a mid-month read than raw totals, which will naturally look smaller than June's final numbers.<br><br>
       <ul>
         <li>CAC and ZT1 % of Meta spend are running above target early in July — worth watching whether Lantern creative pacing catches up as spend scales through the month, the way it did in June.</li>
         <li>Impressions and engagement rate carry the same Partnership-Ad inflation caveat as June: Refunnel's organic engagement rate looks compressed when content is also running as paid.</li>
-        <li>Onboarding is pacing behind the 20-goal; posting volume is roughly on pace.</li>
+        <li>Onboarding is pacing behind the 20-goal on paper, but 12 approved creators are sitting just behind that line waiting on video submission — actual pipeline health is stronger than the raw number suggests.</li>
+        <li>Section 05 (creator pipeline &amp; deliverables) reflects Jez's affiliate-program update as of July 15. The one gap still open: which live content has been shared with Found's media team for boosting.</li>
+        <li>Note the affiliate model has no contracts, but deliverables are still tracked as owed/outstanding per Mel's format (2 Reels/creator/month) — the underlying agreement is informal, the reporting language matches contracted programs.</li>
       </ul>
     </div>
   </section>
@@ -154,13 +226,12 @@
 <script>
 /* ============================================================
    UPDATE THIS BLOCK EACH TIME YOU REFRESH THE REPORT.
-   Every number on the page is driven from here — pull the
-   latest values from the "Jul MTD" column (col J) in the sheet,
-   paste them in, save, redeploy. Nothing else needs to change.
+   Pull the latest values from the "Jul MTD" column (col J) in
+   the sheet, paste them in, save, redeploy.
    ============================================================ */
 const DATA = {
-  asOfDate: "July 14, 2026",
-  daysElapsedInMonth: 14,
+  asOfDate: "July 15, 2026",
+  daysElapsedInMonth: 15,
   daysInMonth: 31,
 
   june: {
@@ -170,9 +241,9 @@ const DATA = {
     cac: 540.68, ztShare: 13.17
   },
   julyMTD: {
-    replies: 108, interested: 23, replyRate: 21.40, applied: 9, appRate: 39.13,
-    onboarded: 8, onboardedGoal: 20, posting: 11, posts: 30, postsGoal: 60,
-    impressions: 130100, engagement: 5400, engagementRate: 4.15, emv: 883,
+    replies: 108, interested: 23, replyRate: 21.40, applied: 21, appRate: 91.30,
+    onboarded: 8, onboardedGoal: 20, posting: 16, posts: 24, postsGoal: 60,
+    impressions: 93100, engagement: 5600, engagementRate: 6.02, emv: 5000,
     cac: 705.14, ztShare: 22.66
   },
   targets: { cac: 400, ztShareLow: 10, ztShareHigh: 15, engagementRate: 2 }
@@ -189,7 +260,6 @@ document.getElementById('pace-pct-2').textContent = pacePct + '%';
 
 const j = DATA.julyMTD, t = DATA.targets;
 
-// KPI cards
 const kpis = [
   {
     label: 'Cost per Event D (CAC)', value: fmtMoney(j.cac), target: `Target < ${fmtMoney(t.cac)}`,
@@ -216,7 +286,6 @@ document.getElementById('kpi-cards').innerHTML = kpis.map(k => `
   </div>
 `).join('');
 
-// Pace rows
 function paceRow(name, current, goal){
   const goalPct = Math.min(100, (current / goal) * 100);
   return `
@@ -234,7 +303,6 @@ document.getElementById('pace-rows').innerHTML =
   paceRow('Posts', j.posts, j.postsGoal) +
   paceRow('Onboarded', j.onboarded, j.onboardedGoal);
 
-// Funnel
 const funnelSteps = [
   {n: j.replies, l: 'Replies'},
   {n: j.interested, l: 'Interested', r: pct(j.replyRate) + ' reply rate'},
@@ -251,7 +319,6 @@ document.getElementById('funnel-steps').innerHTML = funnelSteps.map((s,i) => `
   </div>
 `).join('');
 
-// Content cards
 const contentCards = [
   {label:'Posts', value: fmt(j.posts), vs: `vs ${fmt(DATA.june.posts)} in June (final)`},
   {label:'Impressions', value: fmt(j.impressions), vs: `vs ${fmt(DATA.june.impressions)} in June (final)`},
